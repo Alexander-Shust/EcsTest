@@ -9,12 +9,18 @@ namespace Systems
         public void Run(IEcsSystems systems)
         {
             var world = systems.GetWorld();
-            var filter = world.Filter<MouseButtonPressed>().End();
-            var pool = world.GetPool<MouseButtonPressed>();
-            foreach (var entity in filter)
+            var buttonFilter = world.Filter<MouseButtonPressed>().End();
+            var buttonPool = world.GetPool<MouseButtonPressed>();
+            var movablePool = world.GetPool<Movable>();
+            foreach (var buttonEntity in buttonFilter)
             {
-                Debug.LogError("Mouse button pressed");
-                pool.Del(entity);
+                var playerFilter = world.Filter<PlayerComponent>().End();
+                foreach (var playerEntity in playerFilter)
+                {
+                    ref var movablePlayer = ref movablePool.Get(playerEntity);
+                    movablePlayer.Destination = buttonPool.Get(buttonEntity).ClickPosition;
+                }
+                buttonPool.Del(buttonEntity);
             }
         }
     }
