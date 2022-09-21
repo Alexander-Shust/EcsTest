@@ -11,9 +11,11 @@ namespace Systems
             var world = systems.GetWorld();
             var movablePool = world.GetPool<Movable>();
             var movableFilter = world.Filter<Movable>().End();
-            foreach (var entity in movableFilter)
+            foreach (var movableEntity in movableFilter)
             {
-                ref var movable = ref movablePool.Get(entity);
+                ref var movable = ref movablePool.Get(movableEntity);
+                if (movable.IsFrozen) continue;
+                
                 movable.Position = Vector3.Lerp(movable.Position, movable.Destination, movable.MoveSpeed * Time.deltaTime);
                 movable.Transform.localPosition = movable.Position;
             }

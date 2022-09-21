@@ -14,7 +14,7 @@ namespace Systems
                 var camera = Camera.main;
                 if (camera == null) return;
                 var entity = world.NewEntity();
-                var buttons = world.GetPool<MouseButtonPressed>();
+                var buttons = world.GetPool<MouseButtonEvent>();
                 ref var button = ref buttons.Add(entity);
                 var mousePosition = Input.mousePosition;
                 button.ClickPosition = camera.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, -camera.transform.position.z));

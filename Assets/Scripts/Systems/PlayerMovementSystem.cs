@@ -1,6 +1,5 @@
 ﻿using Components;
 using Leopotam.EcsLite;
-using UnityEngine;
 
 namespace Systems
 {
@@ -9,18 +8,18 @@ namespace Systems
         public void Run(IEcsSystems systems)
         {
             var world = systems.GetWorld();
-            var buttonFilter = world.Filter<MouseButtonPressed>().End();
-            var buttonPool = world.GetPool<MouseButtonPressed>();
+            var mouseEventFilter = world.Filter<MouseButtonEvent>().End();
+            var mouseEventPool = world.GetPool<MouseButtonEvent>();
             var movablePool = world.GetPool<Movable>();
-            foreach (var buttonEntity in buttonFilter)
+            foreach (var mouseEventEntity in mouseEventFilter)
             {
                 var playerFilter = world.Filter<PlayerComponent>().End();
                 foreach (var playerEntity in playerFilter)
                 {
                     ref var movablePlayer = ref movablePool.Get(playerEntity);
-                    movablePlayer.Destination = buttonPool.Get(buttonEntity).ClickPosition;
+                    movablePlayer.Destination = mouseEventPool.Get(mouseEventEntity).ClickPosition;
                 }
-                buttonPool.Del(buttonEntity);
+                mouseEventPool.Del(mouseEventEntity);
             }
         }
     }

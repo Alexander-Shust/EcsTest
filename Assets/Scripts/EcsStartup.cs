@@ -1,24 +1,28 @@
+using System;
 using Leopotam.EcsLite;
 using Systems;
 using UnityEngine;
 
-sealed class EcsStartup : MonoBehaviour 
+public sealed class EcsStartup : MonoBehaviour 
 {
-    EcsWorld _world;        
-    IEcsSystems _systems;
+    private EcsWorld _world;        
+    private IEcsSystems _systems;
+    private IEcsSystems _lateSystems;
 
-    void Start() 
+    private void Start() 
     {
         _world = new EcsWorld();
         _systems = new EcsSystems(_world);
         _systems
             .Add(new PlayerInitSystem())
+            .Add(new ButtonInitSystem())
+            .Add(new DoorInitSystem())
+            
             .Add(new MouseInputSystem())
             .Add(new PlayerMovementSystem())
             .Add(new MovementSystem())
-            // register your systems here, for example:
-            // .Add (new TestSystem1 ())
-            // .Add (new TestSystem2 ())
+            .Add(new ButtonTriggerSystem())
+            .Add(new DoorMovementSystem())
                 
             // register additional worlds here, for example:
             // .AddWorld (new EcsWorld (), "events")
@@ -28,15 +32,25 @@ sealed class EcsStartup : MonoBehaviour
             .Add(new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem())
 #endif
             .Init();
+        
+        _lateSystems = new EcsSystems(_world);
+        _lateSystems
+            .Add(new EventClearSystem())
+            .Init();
     }
 
-    void Update() 
+    private void Update() 
     {
         // process systems here.
         _systems?.Run();
     }
 
-    void OnDestroy() 
+    private void LateUpdate()
+    {
+        _lateSystems.Run();
+    }
+
+    private void OnDestroy() 
     {
         if (_systems != null) 
         {
