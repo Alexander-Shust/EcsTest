@@ -15,8 +15,9 @@ namespace Systems
             {
                 ref var movable = ref movablePool.Get(movableEntity);
                 if (movable.IsFrozen) continue;
-                
-                movable.Position = Vector3.Lerp(movable.Position, movable.Destination, movable.MoveSpeed * Time.deltaTime);
+
+                var direction = Vector3.Normalize(movable.Destination - movable.Position);
+                movable.Position += direction * movable.MoveSpeed * Time.deltaTime;
                 movable.Transform.localPosition = movable.Position;
             }
         }

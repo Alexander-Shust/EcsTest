@@ -1,4 +1,3 @@
-using System;
 using Leopotam.EcsLite;
 using Systems;
 using UnityEngine;
@@ -23,14 +22,6 @@ public sealed class EcsStartup : MonoBehaviour
             .Add(new MovementSystem())
             .Add(new ButtonTriggerSystem())
             .Add(new DoorMovementSystem())
-                
-            // register additional worlds here, for example:
-            // .AddWorld (new EcsWorld (), "events")
-#if UNITY_EDITOR
-            // add debug systems for custom worlds here, for example:
-            // .Add (new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem ("events"))
-            .Add(new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem())
-#endif
             .Init();
         
         _lateSystems = new EcsSystems(_world);
@@ -41,7 +32,6 @@ public sealed class EcsStartup : MonoBehaviour
 
     private void Update() 
     {
-        // process systems here.
         _systems?.Run();
     }
 
@@ -54,16 +44,16 @@ public sealed class EcsStartup : MonoBehaviour
     {
         if (_systems != null) 
         {
-            // list of custom worlds will be cleared
-            // during IEcsSystems.Destroy(). so, you
-            // need to save it here if you need.
             _systems.Destroy();
             _systems = null;
         }
-            
-        // cleanup custom worlds here.
-            
-        // cleanup default world.
+
+        if (_lateSystems != null)
+        {
+            _lateSystems.Destroy();
+            _lateSystems = null;
+        }
+        
         if (_world != null) 
         {
             _world.Destroy();

@@ -19,7 +19,6 @@ namespace Systems
                     ref var movablePlayer = ref movablePool.Get(playerEntity);
                     movablePlayer.Destination = mouseEventPool.Get(mouseEventEntity).ClickPosition;
                 }
-                mouseEventPool.Del(mouseEventEntity);
             }
         }
     }
