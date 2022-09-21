@@ -4,7 +4,7 @@ namespace Components
 {
     public struct Movable
     {
-        public bool IsFrozen;
+        public bool IsIdle;
         public Transform Transform;
         public Vector3 Position;
         public Vector3 Destination;

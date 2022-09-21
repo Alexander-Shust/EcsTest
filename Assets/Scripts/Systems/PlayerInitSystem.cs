@@ -21,7 +21,8 @@ namespace Systems
             var triggerPool = world.GetPool<ButtonTriggerComponent>();
             
             var playerEntity = world.NewEntity();
-            playerPool.Add(playerEntity);
+            ref var player = ref playerPool.Add(playerEntity);
+            player.PlayerAnimator = playerGo.GetComponent<Animator>();
             triggerPool.Add(playerEntity);
             ref var movable = ref movablePool.Add(playerEntity);
             movable.Transform = playerGo.transform;
@@ -29,8 +30,8 @@ namespace Systems
             movable.Destination = movable.Position;
             movable.Rotation = Quaternion.identity;
             movable.MoveSpeed = 5.0f;
-            movable.RotateSpeed = 5.0f;
-            movable.IsFrozen = false;
+            movable.RotateSpeed = 10.0f;
+            movable.IsIdle = true;
         }
     }
 }

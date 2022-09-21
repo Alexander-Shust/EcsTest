@@ -27,7 +27,7 @@ namespace Systems
             {
                 var door = doorPool.Get(doorEntity);
                 ref var movableDoor = ref movablePool.Get(doorEntity);
-                movableDoor.IsFrozen = !activeButtons.Contains(door.Id);
+                movableDoor.IsIdle = !activeButtons.Contains(door.Id);
             }
         }
     }

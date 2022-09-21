@@ -16,9 +16,9 @@ public sealed class EcsStartup : MonoBehaviour
             .Add(new PlayerInitSystem())
             .Add(new ButtonInitSystem())
             .Add(new DoorInitSystem())
-            
             .Add(new MouseInputSystem())
             .Add(new PlayerMovementSystem())
+            .Add(new PlayerAnimationSystem())
             .Add(new MovementSystem())
             .Add(new ButtonTriggerSystem())
             .Add(new DoorMovementSystem())
@@ -37,7 +37,7 @@ public sealed class EcsStartup : MonoBehaviour
 
     private void LateUpdate()
     {
-        _lateSystems.Run();
+        _lateSystems?.Run();
     }
 
     private void OnDestroy() 

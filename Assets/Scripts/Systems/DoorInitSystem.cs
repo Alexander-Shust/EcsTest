@@ -28,7 +28,7 @@ namespace Systems
                 movable.Rotation = Quaternion.identity;
                 movable.MoveSpeed = 0.2f;
                 movable.RotateSpeed = 0.0f;
-                movable.IsFrozen = true;
+                movable.IsIdle = true;
             }
         }
     }
