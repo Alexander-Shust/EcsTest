@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Systems
 {
-    public class PlayerMovementSystem : IEcsRunSystem
+    public class PlayerControlSystem : IEcsRunSystem
     {
         public void Run(IEcsSystems systems)
         {

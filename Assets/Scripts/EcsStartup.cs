@@ -18,12 +18,12 @@ public sealed class EcsStartup : MonoBehaviour
             .Add(new ButtonInitSystem())
             .Add(new DoorInitSystem())
             .Add(new MouseInputSystem())
-            .Add(new PlayerMovementSystem())
+            .Add(new PlayerControlSystem())
             .Add(new PlayerAnimationSystem())
             .Add(new ButtonTriggerSystem())
-            .Add(new DoorMovementSystem())
-            .Add(new MovementSystem())
+            .Add(new DoorActivationSystem())
             .Add(new RotationSystem())
+            .Add(new MovementSystem())
             .Init();
         
         _lateSystems = new EcsSystems(_world);

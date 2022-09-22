@@ -4,8 +4,6 @@ using UnityEngine;
 public class GameConfig
 {
     public readonly Dictionary<int, Color> Colors;
-    public readonly float DoorMoveSpeed = 0.2f;
-    public readonly float DoorRotateSpeed = 0.5f;
     public readonly float PlayerMoveSpeed = 5.0f;
     public readonly float PlayerRotateSpeed = 8.0f;
 

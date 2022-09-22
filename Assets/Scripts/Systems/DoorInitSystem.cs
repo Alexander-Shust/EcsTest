@@ -18,8 +18,6 @@ namespace Systems
             var idlePool = world.GetPool<Idle>();
             var config = systems.GetShared<GameConfig>();
             var colors = config.Colors;
-            var moveSpeed = config.DoorMoveSpeed;
-            var rotateSpeed = config.DoorRotateSpeed;
             foreach (var door in doors)
             {
                 var doorColor = Color.black;
@@ -38,13 +36,14 @@ namespace Systems
                 movable.Transform = door.transform;
                 movable.Position = movable.Transform.position;
                 movable.Destination = door.Target.position;
-                movable.MoveSpeed = moveSpeed;
+                movable.MoveSpeed = Vector3.Distance(movable.Destination, movable.Position) / door.OpenTime;
 
                 ref var rotatable = ref rotatablePool.Add(doorEntity);
                 rotatable.Transform = door.transform;
                 rotatable.Rotation = rotatable.Transform.rotation;
                 rotatable.TargetRotation = door.Target.rotation;
-                rotatable.RotateSpeed = rotateSpeed;
+                rotatable.TargetRotation.ToAngleAxis(out var angle, out var axis);
+                rotatable.RotateSpeed = angle * Mathf.Deg2Rad / door.OpenTime;
             }
         }
     }

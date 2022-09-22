@@ -4,7 +4,7 @@ using Leopotam.EcsLite;
 
 namespace Systems
 {
-    public class DoorMovementSystem : IEcsRunSystem
+    public class DoorActivationSystem : IEcsRunSystem
     {
         public void Run(IEcsSystems systems)
         {
