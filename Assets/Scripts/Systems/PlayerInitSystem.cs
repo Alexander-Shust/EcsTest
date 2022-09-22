@@ -9,11 +9,7 @@ namespace Systems
         public void Init(IEcsSystems systems)
         {
             var playerGo = GameObject.FindWithTag("Player");
-            if (playerGo == null)
-            {
-                Debug.LogError("No player GO found!");
-                return;
-            }
+            if (playerGo == null) return;
             
             var world = systems.GetWorld();
             var playerPool = world.GetPool<PlayerComponent>();
