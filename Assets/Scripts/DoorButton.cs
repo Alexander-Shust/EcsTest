@@ -8,9 +8,8 @@ public class DoorButton : MonoBehaviour
     private CapsuleCollider _collider;
 
     public int Id => _id;
-
-    public Vector3 Center => _collider.transform.position;
-    public float Radius => _collider.radius;
+    public Vector3 Center => _collider.bounds.center;
+    public float Radius => _collider.bounds.extents.x;
 
     private void Awake()
     {
