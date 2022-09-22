@@ -17,6 +17,7 @@ public sealed class EcsStartup : MonoBehaviour
             .Add(new PlayerInitSystem())
             .Add(new ButtonInitSystem())
             .Add(new DoorInitSystem())
+            .Add(new TimeSystem())
             .Add(new MouseInputSystem())
             .Add(new PlayerControlSystem())
             .Add(new PlayerAnimationSystem())
@@ -28,6 +29,7 @@ public sealed class EcsStartup : MonoBehaviour
         
         _lateSystems = new EcsSystems(_world);
         _lateSystems
+            .Add(new RenderingSystem())
             .Add(new EventClearSystem())
             .Init();
     }

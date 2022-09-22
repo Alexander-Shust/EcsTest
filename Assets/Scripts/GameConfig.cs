@@ -6,6 +6,7 @@ public class GameConfig
     public readonly Dictionary<int, Color> Colors;
     public readonly float PlayerMoveSpeed = 5.0f;
     public readonly float PlayerRotateSpeed = 8.0f;
+    public float DeltaTime;
 
     public GameConfig()
     {

@@ -11,11 +11,11 @@ namespace Systems
             var world = systems.GetWorld();
             var rotatablePool = world.GetPool<Rotatable>();
             var rotatableFilter = world.Filter<Rotatable>().Exc<Idle>().End();
+            var config = systems.GetShared<GameConfig>();
             foreach (var rotatableEntity in rotatableFilter)
             {
                 ref var rotatable = ref rotatablePool.Get(rotatableEntity);
-                rotatable.Rotation = Quaternion.Lerp(rotatable.Rotation, rotatable.TargetRotation, rotatable.RotateSpeed * Time.deltaTime);
-                rotatable.Transform.rotation = rotatable.Rotation;
+                rotatable.Rotation = Quaternion.Lerp(rotatable.Rotation, rotatable.TargetRotation, rotatable.RotateSpeed * config.DeltaTime);
             }
         }
     }

@@ -16,12 +16,4 @@ public class Door : MonoBehaviour
     public Transform Target => _target;
 
     public float OpenTime => _openTime;
-
-    private void Awake()
-    {
-        if (_target == null)
-        {
-            _target = transform;
-        }
-    }
 }
