@@ -10,7 +10,7 @@ namespace Systems
         {
             var world = systems.GetWorld();
             var doorPool = world.GetPool<DoorComponent>();
-            var movablePool = world.GetPool<Movable>();
+            var idlePool = world.GetPool<Idle>();
             var activeButtonPool = world.GetPool<ActiveButtonEvent>();
             var activeButtonFilter = world.Filter<ActiveButtonEvent>().End();
             var doorFilter = world.Filter<DoorComponent>().End();
@@ -26,8 +26,14 @@ namespace Systems
             foreach (var doorEntity in doorFilter)
             {
                 var door = doorPool.Get(doorEntity);
-                ref var movableDoor = ref movablePool.Get(doorEntity);
-                movableDoor.IsIdle = !activeButtons.Contains(door.Id);
+                if (activeButtons.Contains(door.Id))
+                {
+                    idlePool.Del(doorEntity);
+                }
+                else if (!idlePool.Has(doorEntity))
+                {
+                    idlePool.Add(doorEntity);
+                }
             }
         }
     }

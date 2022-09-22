@@ -28,7 +28,6 @@ namespace Systems
                 var button = buttonPool.Get(buttonEntity);
                 if (ButtonTriggered(button, triggers))
                 {
-                    Debug.LogError(button.Id);
                     var activeButtonEntity = world.NewEntity();
                     ref var activeButtonEvent = ref buttonEventPool.Add(activeButtonEntity);
                     activeButtonEvent.Id = button.Id;

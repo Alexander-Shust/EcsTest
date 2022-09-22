@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace Components
+﻿namespace Components
 {
     public struct ButtonTriggerComponent
     {

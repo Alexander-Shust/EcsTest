@@ -13,8 +13,16 @@ namespace Systems
             
             var world = systems.GetWorld();
             var buttonPool = world.GetPool<ButtonComponent>();
+            var colors = systems.GetShared<GameConfig>().Colors;
             foreach (var button in buttons)
             {
+                var buttonColor = Color.black;
+                if (colors.TryGetValue(button.Id, out var color))
+                {
+                    buttonColor = color;
+                }
+                button.GetComponent<Renderer>().material.color = buttonColor;
+                
                 var buttonEntity = world.NewEntity();
                 ref var buttonComponent = ref buttonPool.Add(buttonEntity);
                 buttonComponent.Id = button.Id;

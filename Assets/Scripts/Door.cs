@@ -10,7 +10,7 @@ public class Door : MonoBehaviour
 
     public int Id => _id;
 
-    public Vector3 Target => _target.position;
+    public Transform Target => _target;
 
     private void Awake()
     {

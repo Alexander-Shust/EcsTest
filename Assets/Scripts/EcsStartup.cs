@@ -11,7 +11,8 @@ public sealed class EcsStartup : MonoBehaviour
     private void Start() 
     {
         _world = new EcsWorld();
-        _systems = new EcsSystems(_world);
+        var gameConfig = new GameConfig();
+        _systems = new EcsSystems(_world, gameConfig);
         _systems
             .Add(new PlayerInitSystem())
             .Add(new ButtonInitSystem())
@@ -19,9 +20,10 @@ public sealed class EcsStartup : MonoBehaviour
             .Add(new MouseInputSystem())
             .Add(new PlayerMovementSystem())
             .Add(new PlayerAnimationSystem())
-            .Add(new MovementSystem())
             .Add(new ButtonTriggerSystem())
             .Add(new DoorMovementSystem())
+            .Add(new MovementSystem())
+            .Add(new RotationSystem())
             .Init();
         
         _lateSystems = new EcsSystems(_world);

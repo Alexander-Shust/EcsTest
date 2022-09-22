@@ -18,20 +18,27 @@ namespace Systems
             var world = systems.GetWorld();
             var playerPool = world.GetPool<PlayerComponent>();
             var movablePool = world.GetPool<Movable>();
+            var rotatablePool = world.GetPool<Rotatable>();
+            var idlePool = world.GetPool<Idle>();
             var triggerPool = world.GetPool<ButtonTriggerComponent>();
-            
+            var config = systems.GetShared<GameConfig>();
             var playerEntity = world.NewEntity();
             ref var player = ref playerPool.Add(playerEntity);
             player.PlayerAnimator = playerGo.GetComponent<Animator>();
             triggerPool.Add(playerEntity);
+            idlePool.Add(playerEntity);
+            
             ref var movable = ref movablePool.Add(playerEntity);
             movable.Transform = playerGo.transform;
             movable.Position = movable.Transform.position;
             movable.Destination = movable.Position;
-            movable.Rotation = Quaternion.identity;
-            movable.MoveSpeed = 5.0f;
-            movable.RotateSpeed = 10.0f;
-            movable.IsIdle = true;
+            movable.MoveSpeed = config.PlayerMoveSpeed;
+
+            ref var rotatable = ref rotatablePool.Add(playerEntity);
+            rotatable.Transform = playerGo.transform;
+            rotatable.Rotation = playerGo.transform.rotation;
+            rotatable.TargetRotation = rotatable.Rotation;
+            rotatable.RotateSpeed = config.PlayerRotateSpeed;
         }
     }
 }

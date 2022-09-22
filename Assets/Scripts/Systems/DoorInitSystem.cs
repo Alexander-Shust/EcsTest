@@ -14,21 +14,37 @@ namespace Systems
             var world = systems.GetWorld();
             var doorPool = world.GetPool<DoorComponent>();
             var movablePool = world.GetPool<Movable>();
+            var rotatablePool = world.GetPool<Rotatable>();
+            var idlePool = world.GetPool<Idle>();
+            var config = systems.GetShared<GameConfig>();
+            var colors = config.Colors;
+            var moveSpeed = config.DoorMoveSpeed;
+            var rotateSpeed = config.DoorRotateSpeed;
             foreach (var door in doors)
             {
-                var doorEntity = world.NewEntity();
+                var doorColor = Color.black;
+                if (colors.TryGetValue(door.Id, out var color))
+                {
+                    doorColor = color;
+                }
+                door.GetComponent<Renderer>().material.color = doorColor;
                 
+                var doorEntity = world.NewEntity();
                 ref var doorComponent = ref doorPool.Add(doorEntity);
                 doorComponent.Id = door.Id;
+                idlePool.Add(doorEntity);
                 
                 ref var movable = ref movablePool.Add(doorEntity);
                 movable.Transform = door.transform;
                 movable.Position = movable.Transform.position;
-                movable.Destination = door.Target;
-                movable.Rotation = Quaternion.identity;
-                movable.MoveSpeed = 0.2f;
-                movable.RotateSpeed = 0.0f;
-                movable.IsIdle = true;
+                movable.Destination = door.Target.position;
+                movable.MoveSpeed = moveSpeed;
+
+                ref var rotatable = ref rotatablePool.Add(doorEntity);
+                rotatable.Transform = door.transform;
+                rotatable.Rotation = rotatable.Transform.rotation;
+                rotatable.TargetRotation = door.Target.rotation;
+                rotatable.RotateSpeed = rotateSpeed;
             }
         }
     }
